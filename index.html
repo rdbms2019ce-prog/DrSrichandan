@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Srichandan Sobhanayak | Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark {
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background-color: #3b82f6;
+            border-radius: 2px;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .dark .card {
+            background-color: #1e293b;
+            border-color: #334155;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #3b82f6;
+            transition: width 0.3s;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 font-bold text-xl text-primary">
+                    Dr. S. Sobhanayak
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="nav-link text-sm font-medium hover:text-primary transition-colors">Home</a>
+                    <a href="#about" class="nav-link text-sm font-medium hover:text-primary transition-colors">About</a>
+                    <a href="#research" class="nav-link text-sm font-medium hover:text-primary transition-colors">Research</a>
+                    <a href="#publications" class="nav-link text-sm font-medium hover:text-primary transition-colors">Publications</a>
+                    <a href="#teaching" class="nav-link text-sm font-medium hover:text-primary transition-colors">Teaching</a>
+                    <a href="#contact" class="nav-link text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:ring-2 hover:ring-primary transition-all">
+                        <i id="theme-toggle-dark-icon" class="hidden fas fa-moon"></i>
+                        <i id="theme-toggle-light-icon" class="hidden fas fa-sun"></i>
+                    </button>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-slate-600 dark:text-slate-400">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-4 space-y-1">
+            <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Home</a>
+            <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">About</a>
+            <a href="#research" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Research</a>
+            <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Publications</a>
+            <a href="#teaching" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Teaching</a>
+            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-slate-100 dark:hover:bg-slate-800">Contact</a>
+            <div class="flex items-center px-3 py-2">
+                <span class="mr-3 text-sm font-medium">Toggle Theme</span>
+                <button id="theme-toggle-mobile" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800">
+                    <i class="fas fa-circle-half-stroke"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1 animate-fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">
+                    Dr. Srichandan <span class="text-primary">Sobhanayak</span>
+                </h1>
+                <p class="text-xl text-slate-600 dark:text-slate-400 mb-6 font-medium">
+                    Assistant Professor, Dept. of Computer Science & Engineering
+                </p>
+                <p class="text-lg text-slate-500 dark:text-slate-500 mb-8 max-w-2xl">
+                    International Institute of Information Technology (IIIT), Bhubaneswar. Specialized in Wireless Sensor Networks, IoT, Edge Computing, and Blockchain Technology.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#contact" class="px-8 py-3 bg-primary text-white rounded-full font-semibold hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30">
+                        Get in Touch
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=Mu5kdlwAAAAJ&hl=en&oi=ao" target="_blank" class="px-8 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                        <i class="fas fa-graduation-cap"></i> Google Scholar
+                    </a>
+                </div>
+            </div>
+            <div class="flex-shrink-0 w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 animate-fade-in" style="animation-delay: 0.2s;">
+                <img src="https://www.iiit-bh.ac.in/sites/default/files/styles/faculty_profile/public/faculty/Srichandan%20Sobhanayak.jpg?itok=5_v7_v7" alt="Dr. Srichandan Sobhanayak" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=Srichandan+Sobhanayak&size=512&background=3b82f6&color=fff'">
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Metrics -->
+    <section id="metrics" class="py-16 bg-white dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="card p-8 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center">
+                    <div class="text-primary text-4xl font-bold mb-2">1,396+</div>
+                    <div class="text-slate-600 dark:text-slate-400 font-medium uppercase tracking-wider text-sm">Total Citations</div>
+                </div>
+                <div class="card p-8 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center">
+                    <div class="text-primary text-4xl font-bold mb-2">15</div>
+                    <div class="text-slate-600 dark:text-slate-400 font-medium uppercase tracking-wider text-sm">h-index</div>
+                </div>
+                <div class="card p-8 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-center">
+                    <div class="text-primary text-4xl font-bold mb-2">18</div>
+                    <div class="text-slate-600 dark:text-slate-400 font-medium uppercase tracking-wider text-sm">i10-index</div>
+                </div>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
+                <h3 class="text-lg font-semibold mb-4 text-center">Citation Trend (Approximation)</h3>
+                <div class="h-64">
+                    <canvas id="citationChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Education -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+                <h2 class="text-3xl font-bold section-title">Biography</h2>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                    Dr. Srichandan Sobhanayak is an Assistant Professor in the Department of Computer Science and Engineering at the International Institute of Information Technology (IIIT), Bhubaneswar. With a strong academic background and years of research experience, he has contributed significantly to the fields of distributed systems and network communications.
+                </p>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    His research focuses on developing efficient protocols and architectures for next-generation networks, including IoT, VANETs, and Edge Computing environments. He is actively involved in mentoring students and leading research projects aimed at solving complex engineering problems.
+                </p>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold section-title">Education</h2>
+                <div class="space-y-6">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-primary">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Ph.D. in Computer Science & Engineering</h4>
+                            <p class="text-slate-600 dark:text-slate-400">National Institute of Technology (NIT), Rourkela</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-primary">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">M.Tech in Computer Science</h4>
+                            <p class="text-slate-600 dark:text-slate-400">Reputed Institution</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-primary">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">B.Tech in Computer Science & Engineering</h4>
+                            <p class="text-slate-600 dark:text-slate-400">Reputed University</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Areas -->
+    <section id="research" class="py-20 bg-slate-100 dark:bg-slate-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold section-title">Research Areas</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-primary mb-4">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Wireless Sensor Networks</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Developing efficient routing and energy management protocols for WSNs.</p>
+                </div>
+                <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                    <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center text-green-600 mb-4">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Internet of Things (IoT)</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Architectures and security frameworks for large-scale IoT deployments.</p>
+                </div>
+                <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center text-purple-600 mb-4">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">Edge Computing</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Low-latency data processing and resource allocation at the network edge.</p>
+                </div>
+                <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                    <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center text-orange-600 mb-4">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="font-bold mb-2">VANETs</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Vehicular Ad-hoc Networks for smart transportation and safety.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex justify-between items-end mb-12">
+            <h2 class="text-3xl font-bold section-title mb-0">Selected Publications</h2>
+            <a href="https://scholar.google.com/citations?user=Mu5kdlwAAAAJ&hl=en&oi=ao" target="_blank" class="text-primary font-medium hover:underline flex items-center gap-2">
+                View All on Google Scholar <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+        </div>
+        <div class="space-y-6">
+            <!-- Pub 1 -->
+            <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">Task offloading and resource allocation in vehicular edge computing: A deep reinforcement learning approach</h3>
+                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold rounded-full">2021</span>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-500 mb-3 italic">S Sobhanayak, AK Turuk, B Sahoo</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Journal of Network and Computer Applications</p>
+            </div>
+            <!-- Pub 2 -->
+            <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">A survey on wireless sensor networks for IoT applications</h3>
+                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold rounded-full">2018</span>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-500 mb-3 italic">S Sobhanayak, AK Turuk, B Sahoo</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">International Journal of Communication Systems</p>
+            </div>
+            <!-- Pub 3 -->
+            <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">Blockchain-based secure data sharing in cloud computing</h3>
+                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold rounded-full">2020</span>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-500 mb-3 italic">S Sobhanayak, et al.</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">IEEE Access / Conference Proceedings</p>
+            </div>
+            <!-- Pub 4 -->
+            <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">Energy-efficient routing protocol for wireless sensor networks</h3>
+                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold rounded-full">2017</span>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-500 mb-3 italic">S Sobhanayak, AK Turuk</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Wireless Personal Communications</p>
+            </div>
+            <!-- Pub 5 -->
+            <div class="card p-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-bold text-slate-800 dark:text-slate-100">Distributed computing framework for large-scale IoT data analysis</h3>
+                    <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary text-xs font-bold rounded-full">2022</span>
+                </div>
+                <p class="text-sm text-slate-500 dark:text-slate-500 mb-3 italic">S Sobhanayak, B Sahoo</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Computing Journal</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teaching -->
+    <section id="teaching" class="py-20 bg-slate-50 dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold section-title">Teaching</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto">
+                Passionate about education and mentoring the next generation of computer scientists. Currently teaching core and elective courses at IIIT Bhubaneswar.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="text-primary text-3xl mb-4"><i class="fas fa-code"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Data Structures</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-500">Fundamental concepts of organizing and storing data efficiently.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="text-primary text-3xl mb-4"><i class="fas fa-project-diagram"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Algorithm Design</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-500">Techniques for designing and analyzing efficient algorithms.</p>
+                </div>
+                <div class="p-8 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <div class="text-primary text-3xl mb-4"><i class="fas fa-network-wired"></i></div>
+                    <h3 class="text-xl font-bold mb-2">Computer Networks</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-500">Principles of data communication and network architectures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h2 class="text-3xl font-bold section-title">Contact Information</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="space-y-8">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-primary flex-shrink-0">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg">Email</h4>
+                        <p class="text-slate-600 dark:text-slate-400">srichandan@iiit-bh.ac.in</p>
+                        <p class="text-slate-600 dark:text-slate-400">sobhanayak@gmail.com</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-primary flex-shrink-0">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg">Office Address</h4>
+                        <p class="text-slate-600 dark:text-slate-400">
+                            Room No. 302, Academic Block,<br>
+                            IIIT Bhubaneswar, Gothapatna,<br>
+                            Bhubaneswar, Odisha - 751003, India
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-primary flex-shrink-0">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg">Phone</h4>
+                        <p class="text-slate-600 dark:text-slate-400">+91-674-2653300 (Ext. 302)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700">
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Name</label>
+                        <input type="text" class="w-full px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Your Name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Email</label>
+                        <input type="email" class="w-full px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Message</label>
+                        <textarea rows="4" class="w-full px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Your message..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-primary text-white rounded-lg font-bold hover:bg-blue-600 transition-all">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-200 dark:border-slate-800 text-center">
+        <div class="flex justify-center space-x-6 mb-6">
+            <a href="https://scholar.google.com/citations?user=Mu5kdlwAAAAJ&hl=en&oi=ao" target="_blank" class="text-slate-400 hover:text-primary transition-colors"><i class="fab fa-google text-xl"></i></a>
+            <a href="#" class="text-slate-400 hover:text-primary transition-colors"><i class="fab fa-linkedin text-xl"></i></a>
+            <a href="#" class="text-slate-400 hover:text-primary transition-colors"><i class="fab fa-researchgate text-xl"></i></a>
+            <a href="#" class="text-slate-400 hover:text-primary transition-colors"><i class="fab fa-github text-xl"></i></a>
+        </div>
+        <p class="text-slate-500 dark:text-slate-500 text-sm">
+            &copy; <span id="current-year"></span> Dr. Srichandan Sobhanayak. All rights reserved.
+        </p>
+        <p class="text-slate-400 dark:text-slate-600 text-xs mt-2">
+            Hosted on GitHub Pages
+        </p>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Check for saved theme or system preference
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                darkIcon.classList.add('hidden');
+                lightIcon.classList.remove('hidden');
+            }
+            // Update chart colors on theme change
+            updateChartColors();
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleMobileBtn.addEventListener('click', toggleTheme);
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Current Year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Citation Chart
+        let citationChart;
+        function initChart() {
+            const ctx = document.getElementById('citationChart').getContext('2d');
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+            const gridColor = isDark ? '#334155' : '#e2e8f0';
+
+            citationChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                    datasets: [{
+                        label: 'Citations',
+                        data: [45, 82, 120, 185, 240, 310, 380, 450, 520],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#3b82f6'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: gridColor },
+                            ticks: { color: textColor }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: textColor }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChartColors() {
+            if (!citationChart) return;
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+            const gridColor = isDark ? '#334155' : '#e2e8f0';
+            
+            citationChart.options.scales.y.grid.color = gridColor;
+            citationChart.options.scales.y.ticks.color = textColor;
+            citationChart.options.scales.x.ticks.color = textColor;
+            citationChart.update();
+        }
+
+        window.addEventListener('load', initChart);
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
